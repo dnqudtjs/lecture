@@ -95,5 +95,74 @@ document.getElementById('secondDot').addEventListener('click', currentImageSlide
 document.getElementById('thirdDot').addEventListener('click', currentImageSlide.bind(null,3));
 document.getElementById('forthDot').addEventListener('click', currentImageSlide.bind(null,4));
 
+// portfolio section
+
+filterSelection("all");
+
+function filterSelection(id) {
+    const listItem = document.querySelectorAll(".listItem");
+    const filterItem = document.querySelectorAll(".filterItem");
+    
+    listItem.forEach(e => {
+        if (e.id == id) {
+            e.classList.add("active");
+        } else {
+            e.classList.remove("active");
+        }
+    });
+
+    let cnt = 0;
+    filterItem.forEach(e => {
+        if (id == "all" || e.classList.contains(id)) {
+            e.classList.add("show");
+        } else {
+            e.classList.remove("show");
+        }
+    });
+}
+
+function viewPortfolio(event) {
+    const portfolioModal = document.querySelector("#portfolioModal");
+    const close = document.querySelector("#modalClose");
+    portfolioModal.style.display = "block";
+    const overlay = (event.target.tagName.toLowerCase() == "i") ? event.target.parentNode : event.target;
+    const image = overlay.nextElementSibling;
+
+    const imageDiv = overlay.parentNode;
+    const mainDiv = imageDiv.nextElementSibling;
+    const subDiv = mainDiv.nextElementSibling;
+    const textDiv = subDiv.nextElementSibling;
+
+    const imageModal = document.querySelector("#modalImage");
+    const mainModal = document.querySelector("#modalMain");
+    const subModal = document.querySelector("#modalSub");
+    const textModal = document.querySelector("#modalText");
+
+    imageModal.src = image.src;
+    mainModal.innerHTML = mainDiv.innerHTML;
+    subModal.innerHTML = subDiv.innerHTML;
+    textModal.innerHTML = textDiv.innerHTML;
+    
+
+    close.addEventListener("click", function () {
+        portfolioModal.style.display = "none";
+    });
+
+
+}
+
+document.querySelector("#all").addEventListener("click", filterSelection.bind(null, "all"));
+document.querySelector("#uiux").addEventListener("click", filterSelection.bind(null, "uiux"));
+document.querySelector("#java").addEventListener("click", filterSelection.bind(null, "java"));
+document.querySelector("#db").addEventListener("click", filterSelection.bind(null, "db"));
+
+const filterItem = document.querySelectorAll(".filterItem");
+filterItem.forEach(e => {
+    e.addEventListener("click", viewPortfolio);
+});
+
+
 init();
+
+
 
