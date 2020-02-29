@@ -162,6 +162,50 @@ filterItem.forEach(e => {
 });
 
 
+
+/* REVIEW AREA */
+var reviewSlideIndex = 0;
+
+function reviewSlideTimer() {
+  plusReviewSlides(1);
+}
+
+var reviewTimer = setInterval(reviewSlideTimer, 3000);
+
+function plusReviewSlides(n) {
+  clearInterval(reviewTimer);
+  reviewTimer = setInterval(reviewSlideTimer, 3000);
+  showReviewSlides(reviewSlideIndex += n);
+}
+
+function showReviewSlides(n) {
+    const review_slides = document.querySelectorAll(".review-slide");
+
+    if (n > review_slides.length - 3) {
+        reviewSlideIndex = 0;
+    }
+
+    if (n < 0) {
+        reviewSlideIndex = review_slides.length - 3;
+    }
+
+    review_slides.forEach(e => {
+        e.classList.remove("show");
+        e.classList.remove("res-show");
+        e.classList.add("hide");
+    });
+
+    review_slides[reviewSlideIndex].classList.remove("hide");
+    review_slides[reviewSlideIndex].classList.add("res-show");
+    review_slides[reviewSlideIndex + 1].classList.remove("hide");
+    review_slides[reviewSlideIndex + 1].classList.add("show");
+    review_slides[reviewSlideIndex + 2].classList.remove("hide");
+    review_slides[reviewSlideIndex + 2].classList.add("show");
+}
+document.getElementById('reviewPrev').addEventListener('click', plusReviewSlides.bind(null,-1));
+document.getElementById('reviewNext').addEventListener('click', plusReviewSlides.bind(null,1));
+
+
 init();
 
 
